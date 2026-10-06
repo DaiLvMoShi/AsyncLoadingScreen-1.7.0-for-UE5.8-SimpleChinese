@@ -1,4 +1,4 @@
-/************************************************************************************
+﻿/************************************************************************************
  *																					*
  * Copyright (C) 2020 Truong Bui.													*
  * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
@@ -13,11 +13,11 @@
 
 #define LOCTEXT_NAMESPACE "AsyncLoadingScreen"
 
-FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading", "LOADING")) {}
+FLoadingWidgetSettings::FLoadingWidgetSettings() : LoadingText(LOCTEXT("Loading", "载入中…")) {}
 
 FPSOPrecacheProgressSettings::FPSOPrecacheProgressSettings()
 {
-	ProgressText = LOCTEXT("CompilingShaders", "Compiling Shaders... {Percent}%");
+	ProgressText = LOCTEXT("CompilingShaders", "正在编译着色器… {Percent}%");
 	// Solid color brushes so the progress bar is visible out of the box without configuring any images
 	Style.BackgroundImage = FSlateColorBrush(FLinearColor(0.02f, 0.02f, 0.02f, 0.8f));
 	Style.FillImage = FSlateColorBrush(FLinearColor::White);

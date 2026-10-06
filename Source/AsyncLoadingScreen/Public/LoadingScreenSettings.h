@@ -1,4 +1,4 @@
-/************************************************************************************
+﻿/************************************************************************************
  *																					*
  * Copyright (C) 2020 Truong Bui.													*
  * Website:	https://github.com/truong-bui/AsyncLoadingScreen						*
@@ -18,100 +18,100 @@
 #include "LoadingScreenSettings.generated.h"
 
 
-/** 
- * Async Loading Screen Layouts
+/**
+ * 异步加载画面布局类型
  */
 UENUM(BlueprintType)
 enum class EAsyncLoadingScreenLayout : uint8
 {
 	/**
-	 * The Classic is a simple, generic layout and fits well with many designs.
-	 * Loading and tip widgets can be at the bottom or top.
+	 * 经典布局是一种简单通用的布局，适配多种设计风格。
+	 * 加载控件和提示控件可以位于屏幕底部或顶部。
 	 */
-	ALSL_Classic UMETA(DisplayName = "Classic"),
-	/** 
-	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top.
-	 * The Center layout is a good choice if your loading icon is the main design.
-	 */
-	ALSL_Center UMETA(DisplayName = "Center"),
+	ALSL_Classic UMETA(DisplayName = "经典"),
 	/**
-	 * The Letterbox layout has two borders on top and bottom of the screen. Loading widget 
-	 * can be on the top and the tip is at the bottom of the screen, or vice versa.
+	 * 加载控件位于屏幕中央，提示控件可以在底部或顶部。
+	 * 如果加载图标是主要视觉元素，居中布局是不错的选择。
 	 */
-	 ALSL_Letterbox UMETA(DisplayName = "Letterbox"),
+	ALSL_Center UMETA(DisplayName = "居中"),
 	/**
-	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
-	 * is suitable for storytelling, long paragraphs due to the height of the tip widget.
+	 * 信箱模式在屏幕上下各有一条边框。加载控件可以在上边，
+	 * 提示文本在下边，反之亦然。
 	 */
-	 ALSL_Sidebar UMETA(DisplayName = "Sidebar"),
+	 ALSL_Letterbox UMETA(DisplayName = "信箱模式"),
+	/**
+	 * 侧边栏布局在屏幕左侧或右侧有一条垂直边框。
+	 * 由于提示控件较高，侧边栏适合用于故事叙述、长文本展示。
+	 */
+	 ALSL_Sidebar UMETA(DisplayName = "侧边栏"),
 
 	/**
-	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
-	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip widget.
+	 * 与侧边栏类似，但双侧边栏在屏幕左右两侧各有一条垂直边框。
+	 * 双侧边栏适合用于故事叙述、长文本展示。
 	 */
-	 ALSL_DualSidebar UMETA(DisplayName = "Dual Sidebar")
+	 ALSL_DualSidebar UMETA(DisplayName = "双侧边栏")
 };
 
-/** Loading Icon Type*/
+/** 加载图标类型 */
 UENUM(BlueprintType)
 enum class ELoadingIconType : uint8
-{		
-	/** SThrobber widget */
-	LIT_Throbber UMETA(DisplayName = "Throbber"),
-	/** SCircularThrobber widget */
-	LIT_CircularThrobber UMETA(DisplayName = "Circular Throbber"),
-	/** Animated images */
-	LIT_ImageSequence UMETA(DisplayName = "Image Sequence")
+{
+	/** SThrobber 进度条控件 */
+	LIT_Throbber UMETA(DisplayName = "进度条"),
+	/** SCircularThrobber 圆形进度条控件 */
+	LIT_CircularThrobber UMETA(DisplayName = "圆形进度条"),
+	/** 动画图片序列 */
+	LIT_ImageSequence UMETA(DisplayName = "图片序列")
 };
 
-/** Loading Widget type */
+/** 加载控件布局方向 */
 UENUM(BlueprintType)
 enum class ELoadingWidgetType : uint8
 {
-	/** Horizontal alignment */
-	LWT_Horizontal UMETA(DisplayName = "Horizontal"),
-	/** Vertical alignment */
-	LWT_Vertical UMETA(DisplayName = "Vertical"),
+	/** 水平排列 */
+	LWT_Horizontal UMETA(DisplayName = "水平"),
+	/** 垂直排列 */
+	LWT_Vertical UMETA(DisplayName = "垂直"),
 };
 
-/** Alignment for widget*/
+/** 控件对齐方式 */
 USTRUCT(BlueprintType)
 struct FWidgetAlignment
 {
 	GENERATED_BODY()
-	/** The horizontal alignment of the widget.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Alignment Setting")
+	/** 控件的水平对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "对齐设置", meta=(DisplayName="水平对齐"))
 	TEnumAsByte<EHorizontalAlignment> HorizontalAlignment = EHorizontalAlignment::HAlign_Center;
 
-	/** The vertical alignment of the widget.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Alignment Setting")
+	/** 控件的垂直对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "对齐设置", meta=(DisplayName="垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> VerticalAlignment = EVerticalAlignment::VAlign_Center;
 };
 
-// Text appearance settings
+// 文本外观设置
 USTRUCT(BlueprintType)
 struct FTextAppearance
 {
 	GENERATED_BODY()
 
-	/** Text color and opacity */
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	/** 文本颜色与不透明度 */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "文本外观", meta=(DisplayName="颜色与不透明度"))
 	FSlateColor ColorAndOpacity = FSlateColor(FLinearColor::White);
 
-	// The font to render the text with.
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	// 渲染文本所用的字体
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "文本外观", meta=(DisplayName="字体"))
 	FSlateFontInfo Font;
 
-	/** Drop shadow offset in pixels */
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	/** 阴影偏移量（像素） */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "文本外观", meta=(DisplayName="阴影偏移"))
 	FVector2D ShadowOffset = FVector2D::ZeroVector;
 
-	/** Shadow color and opacity */
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	/** 阴影颜色与不透明度 */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "文本外观", meta=(DisplayName="阴影颜色与不透明度"))
 	FLinearColor ShadowColorAndOpacity = FLinearColor::White;
 
-	/** How the text should be aligned with the margin. */
-	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "Text Appearance")
+	/** 文本相对于边距的对齐方式 */
+	UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Category = "文本外观", meta=(DisplayName="对齐方式"))
 	TEnumAsByte <ETextJustify::Type> Justification = ETextJustify::Left;
 };
 
@@ -120,24 +120,24 @@ struct FThrobberSettings
 {
 	GENERATED_BODY()
 
-	/** How many pieces there are */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Appearance, meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25"))
+	/** 分段数量 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "外观", meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25", DisplayName="分段数量"))
 	int32 NumberOfPieces = 3;
 
-	/** Should the pieces animate horizontally? */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Appearance)
+	/** 分段是否水平方向动画？ */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "外观", meta=(DisplayName="水平方向动画"))
 	bool bAnimateHorizontally = true;
 
-	/** Should the pieces animate vertically? */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Appearance)
+	/** 分段是否垂直方向动画？ */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "外观", meta=(DisplayName="垂直方向动画"))
 	bool bAnimateVertically = true;
 
-	/** Should the pieces animate their opacity? */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Appearance)
+	/** 分段是否透明度动画？ */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "外观", meta=(DisplayName="透明度动画"))
 	bool bAnimateOpacity = true;
 
-	/** Image to use for each segment of the throbber */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Appearance)
+	/** 进度条每一段使用的图片 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "外观", meta=(DisplayName="分段图片"))
 	FSlateBrush Image;
 };
 
@@ -146,20 +146,20 @@ struct FCircularThrobberSettings
 {
 	GENERATED_BODY()
 
-	/** How many pieces there are */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance, meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25"))
-	int32 NumberOfPieces = 6; 
+	/** 分段数量 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "外观", meta = (ClampMin = "1", ClampMax = "25", UIMin = "1", UIMax = "25", DisplayName="分段数量"))
+	int32 NumberOfPieces = 6;
 
-	/** The amount of time for a full circle (in seconds) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance, meta = (ClampMin = "0", UIMin = "0"))
+	/** 旋转一整圈所需时间（秒） */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "外观", meta = (ClampMin = "0", UIMin = "0", DisplayName="旋转周期（秒）"))
 	float Period = 0.75f;
 
-	/** The radius of the circle. If the throbber is a child of Canvas Panel, the 'Size to Content' option must be enabled in order to set Radius. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
+	/** 圆的半径。如果进度条是画布面板的子控件，需要先启用"适应内容大小"才能设置半径。 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "外观", meta=(DisplayName="半径"))
 	float Radius = 64.0f;
 
-	/** Image to use for each segment of the throbber */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Appearance)
+	/** 进度条每一段使用的图片 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "外观", meta=(DisplayName="分段图片"))
 	FSlateBrush Image;
 };
 
@@ -168,64 +168,64 @@ struct FImageSequenceSettings
 {
 	GENERATED_BODY()
 
-	/** An array of images for animating the loading icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 用于加载图标动画的图片数组 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="图片序列"))
 	TArray<TObjectPtr<UTexture2D>> Images;
 
-	/** Scale of the images.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 图片缩放比例 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="缩放"))
 	FVector2D Scale = FVector2D(1.0f, 1.0f);
 
 	/**
-	 * Time in second to update the images, the smaller value the faster of the animation. A zero value will update the images every frame.
+	 * 更新图片的时间间隔（秒），值越小动画越快。设为0则每帧都更新图片。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1", DisplayName="帧间隔（秒）"))
 	float Interval = 0.05f;
 
-	/** Play the image sequence in reverse.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 是否倒序播放图片序列 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="倒序播放"))
 	bool bPlayReverse = false;
 };
 
 /**
- * Background widget for the widget loading screen
+ * 加载画面背景控件设置
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FBackgroundSettings
 {
 	GENERATED_BODY()
 
-	// The images randomly display while in the loading screen on top of the movie
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	// 加载画面中在视频上方随机显示的图片
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="背景图片"))
 	TArray<TObjectPtr<UTexture2D>> Images;
 
-	// Interval time (in seconds) to randomly update the background image, a value less than or equal to 0 will not update the background image.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	// 随机切换背景图片的时间间隔（秒），小于等于0则不自动切换背景图片。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="自动切换间隔（秒）"))
 	float UpdateInterval = 0.0f;
 
-	// The scaling type to apply to images.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	// 图片的拉伸方式
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="图片拉伸方式"))
 	TEnumAsByte<EStretch::Type> ImageStretch = EStretch::ScaleToFit;
 
-	/** The padding area between the border and the image it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	/** 边框与所包含图片之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="边距"))
 	FMargin Padding;
 
-	// The background color. It fills the whole screen when no image is defined, otherwise it is visible in the padding area around the image (padding = 0 hides it).
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	// 背景颜色。未定义图片时填满整个屏幕，否则在图片周围的边距区域可见（边距为0时隐藏）。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="背景颜色"))
 	FLinearColor BackgroundColor = FLinearColor::Black;
 
 	/**
-	 * If true, you will have to manually set which background index you want to display on the loading screen by calling "SetDisplayBackgroundIndex" function
-	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random background in the "Images" array.
-	 * A valid index also disables the random "Update Interval" refresh, so the chosen background stays on screen.
+	 * 如果为true，你需要在打开新关卡前在蓝图中调用"SetDisplayBackgroundIndex"函数
+	 * 手动指定要在加载画面上显示的背景索引。如果索引无效，则随机显示"背景图片"数组中的图片。
+	 * 指定有效索引后也会禁用随机"自动切换间隔"刷新，使选定的背景保持显示。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Background")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "背景", meta=(DisplayName="手动指定背景索引"))
 	bool bSetDisplayBackgroundManually = false;
 };
 
 /**
- * Loading widget settings
+ * 加载控件设置
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
@@ -234,142 +234,142 @@ struct ASYNCLOADINGSCREEN_API FLoadingWidgetSettings
 
 	FLoadingWidgetSettings();
 
-	/** Loading icon type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载图标类型 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="加载图标类型"))
 	ELoadingIconType LoadingIconType = ELoadingIconType::LIT_CircularThrobber;
-	
-	/** Loading Widget type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+
+	/** 加载控件布局方向 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="加载控件布局"))
 	ELoadingWidgetType LoadingWidgetType = ELoadingWidgetType::LWT_Horizontal;
 
-	/** Render transform translation of the loading icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载图标的位移 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="位移"))
 	FVector2D TransformTranslation = FVector2D(0.0f, 0.0f);
 
-	/** Render transform scale of the loading icon, a negative value will flip the icon.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载图标的缩放，负值将翻转图标 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="缩放"))
 	FVector2D TransformScale = FVector2D(1.0f, 1.0f);
 
-	/** Render transform pivot of the loading icon (in normalized local space).*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载图标的轴心点（归一化局部空间） */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="轴心点"))
 	FVector2D TransformPivot = FVector2D(0.5f, 0.5f);
 
-	// Text displayed beside the animated icon
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	// 显示在动画图标旁边的文本
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="加载文本"))
 	FText LoadingText;
 
-	/** Is Loading Text on the right of the loading icon? Ignore this if you don't choose Loading Widget Type = Horizontal.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载文本是否在加载图标的右侧？仅当加载控件布局为"水平"时生效。 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="文本在图标右侧"))
 	bool bLoadingTextRightPosition = true;
 
-	/** Is Loading Text on the top of the loading icon? Ignore this if you don't choose Loading Widget Type = Vertical.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 加载文本是否在加载图标的上方？仅当加载控件布局为"垂直"时生效。 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="文本在图标上方"))
 	bool bLoadingTextTopPosition = true;
 
-	// Loading text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	// 加载文本外观设置
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="文本外观"))
 	FTextAppearance Appearance;
 
-	/** Throbber settings. Ignore this if you don't choose the 'Throbber' icon type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 进度条设置。未选择"进度条"图标类型时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="进度条设置"))
 	FThrobberSettings ThrobberSettings;
 
-	/** Circular Throbber settings. Ignore this if you don't choose the 'Circular Throbber' icon type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 圆形进度条设置。未选择"圆形进度条"图标类型时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="圆形进度条设置"))
 	FCircularThrobberSettings CircularThrobberSettings;
 
-	/** Image Sequence settings. Ignore this if you don't choose the 'Image Sequence' icon type*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Widget Setting")
+	/** 图片序列设置。未选择"图片序列"图标类型时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载控件设置", meta=(DisplayName="图片序列设置"))
 	FImageSequenceSettings ImageSequenceSettings;
 
-	/** The alignment of the loading text.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	/** 加载文本的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "加载控件设置", meta=(DisplayName="文本对齐"))
 	FWidgetAlignment TextAlignment;
 
-	/** The alignment of the loading icon. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	/** 加载图标的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "加载控件设置", meta=(DisplayName="图标对齐"))
 	FWidgetAlignment LoadingIconAlignment;
 
-	/** Empty space between the loading text and the loading icon */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	/** 加载文本与加载图标之间的间距 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "加载控件设置", meta=(DisplayName="文本与图标间距"))
 	float Space = 1.0f;
 
-	/** Hide the loading widget when the level loading is complete*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Widget Setting")
+	/** 关卡加载完成后隐藏加载控件 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "加载控件设置", meta=(DisplayName="加载完成后隐藏控件"))
 	bool bHideLoadingWidgetWhenCompletes = false;
 };
 
 
 /**
- * Tips text settings
+ * 提示文本设置
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FTipSettings
 {
 	GENERATED_BODY()
 
-	// The tip text randomly display in the loading screen.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings", meta = (MultiLine = true))
+	// 在加载画面中随机显示的提示文本
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "提示设置", meta = (MultiLine = true, DisplayName="提示文本"))
 	TArray<FText> TipText;
 
-	// Interval time (in seconds) to randomly update the tip text, a value less than or equal to 0 will not update the tip text.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")	
+	// 随机切换提示文本的时间间隔（秒），小于等于0则不自动切换提示文本。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "提示设置", meta=(DisplayName="自动切换间隔（秒）"))
 	float UpdateInterval = 0.0f;
 
-	// Tip text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
+	// 提示文本外观设置
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "提示设置", meta=(DisplayName="文本外观"))
 	FTextAppearance Appearance;
 
-	// The size of the tip before it's wrapped to the next line
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
+	// 提示文本换行前的宽度
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "提示设置", meta=(DisplayName="换行宽度"))
 	float TipWrapAt = 0.0f;
 
 	/**
-	 * If true, you will have to manually set which TipText index you want to display on the loading screen by calling "SetDisplayTipTextIndex" function
-	 * in your Blueprint before opening a new level. If the index you set is not valid, then it will display random Tip in the "TipText" array.
-	 * A valid index also disables the random "Update Interval" refresh, so the chosen tip stays on screen.
+	 * 如果为true，你需要在打开新关卡前在蓝图中调用"SetDisplayTipTextIndex"函数
+	 * 手动指定要在加载画面上显示的提示文本索引。如果索引无效，则随机显示"提示文本"数组中的内容。
+	 * 指定有效索引后也会禁用随机"自动切换间隔"刷新，使选定的提示保持显示。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Tip Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "提示设置", meta=(DisplayName="手动指定提示索引"))
 	bool bSetDisplayTipTextManually = false;
 };
 
 /**
- * The text that displayed when loading is complete. Ignore this if you don't set "bShowLoadingCompletedText" = true
+ * 加载完成时显示的文本。未设置"显示加载完成文本"=true时忽略此项
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FLoadingCompleteTextSettings
 {
 	GENERATED_BODY()
 
-	// The text that shows up when level loading is done.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	// 关卡加载完成时显示的文本
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载完成文本设置", meta=(DisplayName="完成文本"))
 	FText LoadingCompleteText;
 
-	// Text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	// 文本外观设置
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载完成文本设置", meta=(DisplayName="文本外观"))
 	FTextAppearance Appearance;
-	
-	/** The alignment of the text.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Loading Complete Text Settings")
+
+	/** 文本对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "加载完成文本设置", meta=(DisplayName="对齐"))
 	FWidgetAlignment Alignment;
 
-	/** Text padding. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	/** 文本边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载完成文本设置", meta=(DisplayName="边距"))
 	FMargin Padding;
 
-	// Animate the text?
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings")
+	// 是否对文本进行动画？
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载完成文本设置", meta=(DisplayName="淡入淡出动画"))
 	bool bFadeInOutAnim = true;
 
 	/**
-	 * Animation speed
+	 * 动画速度
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Complete Text Settings", meta = (UIMax = 10.00, UIMin = 0.00, ClampMin = "0", ClampMax = "10"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载完成文本设置", meta = (UIMax = 10.00, UIMin = 0.00, ClampMin = "0", ClampMax = "10", DisplayName="动画速度"))
 	float AnimationSpeed = 1.0f;
 };
 
 /**
- * The progress bar and text that display PSO precache compilation progress. Ignore this if you don't set "bShowProgressWidget" = true
+ * 显示PSO预编译着色器进度的进度条和文本。未设置"显示进度条控件"=true时忽略此项
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FPSOPrecacheProgressSettings
@@ -379,383 +379,386 @@ struct ASYNCLOADINGSCREEN_API FPSOPrecacheProgressSettings
 	FPSOPrecacheProgressSettings();
 
 	/**
-	 * If true, displays a progress bar with an optional text showing the PSO precache compilation progress.
-	 * The widget only appears while there are outstanding PSO precache compilations, and hides itself when they are done.
-	 * Usually used together with "Wait For PSO Precaching To Complete". Ignore this if you choose "Show Widget Overlay" = false.
+	 * 如果为true，显示带可选文本的进度条，展示PSO预编译着色器进度。
+	 * 该控件仅在有待完成的PSO预编译时出现，编译完成后自动隐藏。
+	 * 通常与"等待PSO预编译完成"一起使用。"显示控件覆盖层"=false时忽略此项。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="显示进度条控件"))
 	bool bShowProgressWidget = false;
 
 	/**
-	 * The text displayed below the progress bar. Supports the {Percent} and {Remaining} format arguments,
-	 * e.g. "Compiling Shaders... {Percent}%" or "Compiling Shaders ({Remaining} remaining)". Leave empty to display the progress bar only.
+	 * 显示在进度条下方的文本。支持 {Percent} 和 {Remaining} 格式化参数，
+	 * 例如 "正在编译着色器... {Percent}%" 或 "正在编译着色器（剩余 {Remaining}）"。留空则只显示进度条。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="进度文本"))
 	FText ProgressText;
 
-	// Progress text appearance settings
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	// 进度文本外观设置
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="文本外观"))
 	FTextAppearance Appearance;
 
-	/** Style of the progress bar (background/fill brushes, fill color, etc.) */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	/** 进度条样式（背景/填充画笔、填充颜色等） */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="进度条样式"))
 	FProgressBarStyle Style;
 
-	/** The size of the progress bar */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	/** 进度条尺寸 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="进度条尺寸"))
 	FVector2D BarSize = FVector2D(500.0f, 20.0f);
 
-	/** The alignment of the progress widget on the screen */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	/** 进度控件在屏幕上的对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="对齐方式"))
 	FWidgetAlignment Alignment;
 
-	/** Progress widget padding */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings")
+	/** 进度控件边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta=(DisplayName="边距"))
 	FMargin Padding = FMargin(0.0f, 0.0f, 0.0f, 60.0f);
 
-	// Interval time (in seconds) to update the progress bar and text. A zero value will update them every frame.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO Precache Progress Settings", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1"))
+	// 更新进度条和文本的时间间隔（秒）。设为0则每帧更新。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "PSO预编译进度设置", meta = (UIMax = 1.00, UIMin = 0.00, ClampMin = "0", ClampMax = "1", DisplayName="更新间隔（秒）"))
 	float UpdateInterval = 0.1f;
 };
 
 /**
- * Loading Screen Settings
+ * 加载画面设置
  */
 USTRUCT(BlueprintType)
 struct ASYNCLOADINGSCREEN_API FALoadingScreenSettings
 {
-	GENERATED_BODY()	
+	GENERATED_BODY()
 
-	// The minimum time that a loading screen should be opened for, -1 if there is no minimum time. I recommend set it to -1.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	// 加载画面的最短显示时间，-1表示无最短时间限制。建议设为-1。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="最短显示时间"))
 	float MinimumLoadingScreenDisplayTime = -1;
-	
-	// If true, the loading screen will disappear as soon as loading is done.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+
+	// 如果为true，加载完成后立即关闭加载画面。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="加载完成后自动关闭"))
 	bool bAutoCompleteWhenLoadingCompletes = true;
 
-	// If true, movies can be skipped by clicking the loading screen as long as loading is done.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	// 如果为true，加载完成后点击加载画面即可跳过视频。
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="允许跳过视频"))
 	bool bMoviesAreSkippable = true;
 
-	/** 
-	 * If true, movie playback continue until Stop is called.
-	 * 
-	 * NOTE: If set "Minimum Loading Screen Display Time" = -1, it will allow players to press any key to stop the loading screen.
-	 * If "Minimum Loading Screen Display Time" >= 0, you have to call "StopLoadingScreen" in the BeginPlay event 
-	 * of your GameInstance, GameMode, or PlayerController blueprint to stop the loading screen ("bAllowEngineTick" must be true)
+	/**
+	 * 如果为true，视频将持续播放直到调用停止函数。
+	 *
+	 * 注意：如果将"最短显示时间"设为-1，玩家可以按任意键关闭加载画面。
+	 * 如果"最短显示时间">=0，则必须在GameInstance、GameMode或PlayerController
+	 * 蓝图的BeginPlay事件中调用"StopLoadingScreen"来关闭加载画面
+	 * （此时"允许引擎Tick"必须设为true）
 	 **/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="等待手动关闭"))
 	bool bWaitForManualStop = false;
 
-	/** If true loading screens here cannot have any uobjects of any kind or use any engine features at all. This will start the movies very early as a result on platforms that support it */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	/** 如果为true，加载画面将不包含任何UObject或引擎功能，这将在支持的平台上更早地启动视频 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="允许在启动早期显示"))
 	bool bAllowInEarlyStartup = false;
 
-	/** If true, this will call the engine tick while the game thread is stalled waiting for a loading movie to finish. This only works for post-startup load screens and is potentially unsafe */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	/** 如果为true，将在游戏线程等待加载视频结束期间调用引擎Tick。仅对启动后的加载画面有效，可能存在安全风险 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="允许引擎Tick"))
 	bool bAllowEngineTick = false;
 
 	/**
-	 * If true, the loading screen also stays up until all outstanding PSO precache compilations (bundled PSO cache + runtime PSO precaching)
-	 * are finished, in addition to level loading. Epic recommends this so players don't see visual popping or hitches right after the loading screen closes.
+	 * 如果为true，除了关卡加载外，加载画面还会保持显示直到所有未完成的PSO预编译
+	 * （内置PSO缓存+运行时PSO预编译）全部完成。Epic推荐此选项，可避免玩家在加载画面关闭后
+	 * 看到画面闪烁或卡顿。
 	 *
-	 * NOTE: This takes over the "Wait For Manual Stop" setting: the plugin forces it to true and stops the loading screen automatically once
-	 * PSO precaching completes (or "PSO Precache Max Wait Time" is exceeded) and "Minimum Loading Screen Display Time" (if >= 0) has elapsed,
-	 * so you don't need to call "StopLoadingScreen" yourself. If "Minimum Loading Screen Display Time" = -1, players can still press any key
-	 * to stop the loading screen once level loading is done, even if PSO precaching is still running. Ignored if "Allow In Early Startup" = true.
-	 * Has no effect when PSO precaching is disabled (r.PSOPrecaching=0, e.g. in the editor or on DirectX 11).
+	 * 注意：此设置会覆盖"等待手动关闭"选项：插件会强制将其设为true，并在PSO预编译完成后
+	 * （或超过"PSO预编译最大等待时间"）且"最短显示时间"（如果>=0）已过后自动关闭加载画面，
+	 * 因此无需手动调用"StopLoadingScreen"。如果"最短显示时间"=-1，即使PSO预编译仍在进行，
+	 * 关卡加载完成后玩家仍可按任意键关闭加载画面。"允许在启动早期显示"=true时此项被忽略。
+	 * PSO预编译被禁用时（r.PSOPrecaching=0，例如编辑器中或DirectX 11下）此项无效。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="等待PSO预编译完成"))
 	bool bWaitForPSOPrecachingToComplete = false;
 
 	/**
-	 * Safety timeout (in seconds) for "Wait For PSO Precaching To Complete", counted from the moment level loading has finished.
-	 * If PSO precaching is still not done after this time, the loading screen closes anyway. A zero value will wait with no time limit.
-	 * A value > 0 is recommended, especially when the project also ships a bundled PSO cache, which can keep the pending count above zero for a long time.
+	 * "等待PSO预编译完成"的安全超时时间（秒），从关卡加载完成时开始计算。
+	 * 如果超过此时间PSO预编译仍未完成，加载画面将照常关闭。设为0则无限等待。
+	 * 建议设置大于0的值，尤其是项目还附带内置PSO缓存时，待处理计数可能长时间大于0。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings", meta = (EditCondition = "bWaitForPSOPrecachingToComplete", UIMax = 60.00, UIMin = 0.00, ClampMin = "0"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta = (EditCondition = "bWaitForPSOPrecachingToComplete", UIMax = 60.00, UIMin = 0.00, ClampMin = "0", DisplayName="PSO预编译最大等待时间（秒）"))
 	float PSOPrecacheMaxWaitTime = 0.0f;
 
 	/**
-	 * If true, boost all outstanding PSO precache compilations to highest priority while this loading screen is displayed, so they finish sooner.
-	 * The priority is restored when the loading screen closes. Has no effect when PSO precaching is disabled (r.PSOPrecaching=0).
+	 * 如果为true，在加载画面显示期间将所有未完成的PSO预编译提升为最高优先级，使其更快完成。
+	 * 加载画面关闭后恢复原优先级。PSO预编译被禁用时（r.PSOPrecaching=0）此项无效。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings", meta = (EditCondition = "bWaitForPSOPrecachingToComplete"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta = (EditCondition = "bWaitForPSOPrecachingToComplete", DisplayName="提升PSO预编译优先级"))
 	bool bBoostPSOPrecachePriority = true;
 
-	/** Should we just play back, loop, etc.  NOTE: if the playback type is MT_LoopLast, then bAutoCompleteWhenLoadingCompletes will be togged on when the last movie is hit*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	/** 播放模式：播放、循环等。注意：如果播放模式为MT_LoopLast，播放完最后一个视频时将自动开启"加载完成后自动关闭" */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="播放模式"))
 	TEnumAsByte<EMoviePlaybackType> PlaybackType = EMoviePlaybackType::MT_Normal;
 
 	/**
-	 * All movie files must be locate at Content/Movies/ directory. Suggested format: MPEG-4 Movie (mp4). Enter file path/name without the extension.
-	 * E.g., if you have a movie name my_movie.mp4 in the 'Content/Movies' folder, then enter my_movie in the input field.
+	 * 所有视频文件必须放在 Content/Movies/ 目录下。推荐格式：MPEG-4 (mp4)。
+	 * 输入时不要带文件扩展名。
+	 * 例如：如果 Content/Movies/ 文件夹下有 my_movie.mp4，则在此输入 my_movie。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="视频文件路径"))
 	TArray<FString> MoviePaths;
-	
+
 	/**
-	 * If true, shuffle the movies list before playing.
+	 * 如果为true，播放前随机打乱视频列表顺序。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="随机播放"))
 	bool bShuffle = false;
 
 	/**
-	 * If true, the "Shuffle" option will be ignored, and you will have to manually set which Movie index you want to display on the loading screen 
-	 * by calling "SetDisplayMovieIndex" function in your Blueprint before opening a new level.
+	 * 如果为true，将忽略"随机播放"选项，你需要在打开新关卡前在蓝图中调用
+	 * "SetDisplayMovieIndex"函数手动指定要播放的视频索引。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movies Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "视频设置", meta=(DisplayName="手动指定视频索引"))
 	bool bSetDisplayMovieIndexManually = false;
 
 
-	/** 
-	 * Should we show the loading screen widgets (background/tips/loading widget)? Generally you'll want to set this to false if you just want to show a movie.
-	 */ 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	bool bShowWidgetOverlay = true;		
+	/**
+	 * 是否显示加载画面控件（背景/提示/加载控件）？如果只想播放视频，建议设为false。
+	 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="显示控件覆盖层"))
+	bool bShowWidgetOverlay = true;
 
 	/**
-	 * If true show a text when level loading is completed. Ignore this if you choose "Show Widget Overlay" = false
+	 * 如果为true，关卡加载完成时显示一段文本。"显示控件覆盖层"=false时忽略此项。
 	 *
-	 * NOTE: To enable this option properly, you need to set "Wait For Manual Stop" = true, and "Minimum Loading Screen Display Time" = -1.
-	 * This also allows players press any button to stop the Loading Screen.
+	 * 注意：要正确启用此选项，需要将"等待手动关闭"设为true，且"最短显示时间"设为-1。
+	 * 同时允许玩家按任意键关闭加载画面。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="显示加载完成文本"))
 	bool bShowLoadingCompleteText = false;
 
 	/**
-	 * The text that displayed when loading is complete. Ignore this if you set "Show Loading Complete Text" = false.
+	 * 加载完成时显示的文本设置。"显示加载完成文本"=false时忽略此项。
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="加载完成文本设置"))
 	FLoadingCompleteTextSettings LoadingCompleteTextSettings;
 
-	/** Background widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
-	FBackgroundSettings Background;	
-	
-	/** Tip widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	/** 加载画面的背景控件。"显示控件覆盖层"=false时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="背景设置"))
+	FBackgroundSettings Background;
+
+	/** 加载画面的提示控件。"显示控件覆盖层"=false时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="提示设置"))
 	FTipSettings TipWidget;
 
-	/** Loading widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	/** 加载画面的加载控件。"显示控件覆盖层"=false时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="加载控件设置"))
 	FLoadingWidgetSettings LoadingWidget;
 
-	/** PSO precache progress widget for the loading screen. Ignore this if you choose "Show Widget Overlay = false" */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	/** 加载画面的PSO预编译进度控件。"显示控件覆盖层"=false时忽略此项 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="PSO预编译进度控件"))
 	FPSOPrecacheProgressSettings PSOPrecacheProgressWidget;
 
 	/**
-	 * Select async loading screen Layout. Ignore this if you choose "Show Widget Overlay = false"
+	 * 选择异步加载画面的布局。"显示控件覆盖层"=false时忽略此项
 	 */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Loading Screen Settings")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "加载画面设置", meta=(DisplayName="布局选择"))
 	EAsyncLoadingScreenLayout Layout = EAsyncLoadingScreenLayout::ALSL_Classic;
 };
 
-/** Classic Layout settings*/
+/** 经典布局设置 */
 USTRUCT(BlueprintType)
 struct FClassicLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is the border that contains loading and tip widget located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
+	/** 包含加载和提示控件的边框是位于底部还是顶部？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "经典布局", meta=(DisplayName="控件在底部"))
 	bool bIsWidgetAtBottom = true;
 
-	/** Is loading widget on the left of the tip? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
-	bool bIsLoadingWidgetAtLeft = true;	
+	/** 加载控件是否在提示文本的左侧？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "经典布局", meta=(DisplayName="加载控件在左侧"))
+	bool bIsLoadingWidgetAtLeft = true;
 
-	/** The empty space between loading widget and the tip.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
+	/** 加载控件与提示文本之间的间距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "经典布局", meta=(DisplayName="控件间距"))
 	float Space = 1.0f;
 
-	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Classic Layout")
+	/** 提示文本的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "经典布局", meta=(DisplayName="提示对齐"))
 	FWidgetAlignment TipAlignment;
 
-	/** The horizontal alignment of the border background.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
+	/** 边框背景的水平对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "居中布局", meta=(DisplayName="边框水平对齐"))
 	TEnumAsByte<EHorizontalAlignment> BorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
-	/** The padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
+	/** 边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "经典布局", meta=(DisplayName="边框边距"))
 	FMargin BorderPadding;
 
-	/** Background appearance settings for the border widget */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Classic Layout")
-	FSlateBrush BorderBackground;	
+	/** 边框控件的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "经典布局", meta=(DisplayName="边框背景"))
+	FSlateBrush BorderBackground;
 };
 
-/** Center Layout settings*/
+/** 居中布局设置 */
 USTRUCT(BlueprintType)
 struct FCenterLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is tip located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
-	bool bIsTipAtBottom = true;	
+	/** 提示文本位于底部还是顶部？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "居中布局", meta=(DisplayName="提示在底部"))
+	bool bIsTipAtBottom = true;
 
-	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
+	/** 提示文本的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "居中布局", meta=(DisplayName="提示对齐"))
 	FWidgetAlignment TipAlignment;
 
-	/** The horizontal alignment of the border.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Center Layout")
+	/** 边框的水平对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "居中布局", meta=(DisplayName="边框水平对齐"))
 	TEnumAsByte<EHorizontalAlignment> BorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
-	/** Offset to bottom or top of the screen depending on the tip located at the bottom or top position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
+	/** 根据提示文本位于底部或顶部，向屏幕底部或顶部的偏移量 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "居中布局", meta=(DisplayName="边框垂直偏移"))
 	float BorderVerticalOffset = 0.0f;
 
-	/** The padding area between the border and the tips it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
+	/** 边框与所包含提示文本之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "居中布局", meta=(DisplayName="边框边距"))
 	FMargin BorderPadding;
 
-	/** Background appearance settings for tip area */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Center Layout")
+	/** 提示区域的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "居中布局", meta=(DisplayName="边框背景"))
 	FSlateBrush BorderBackground;
 };
 
-/** Letterbox Layout settings*/
+/** 信箱模式布局设置 */
 USTRUCT(BlueprintType)
 struct FLetterboxLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is loading widget located at the bottom or top? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
+	/** 加载控件位于底部还是顶部？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="加载控件在顶部"))
 	bool bIsLoadingWidgetAtTop = true;
 
-	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	/** 提示文本的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "信箱模式布局", meta=(DisplayName="提示对齐"))
 	FWidgetAlignment TipAlignment;
 
-	/** The alignment of the loading widget. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	/** 加载控件的对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="加载控件对齐"))
 	FWidgetAlignment LoadingWidgetAlignment;
 
-	/** The horizontal alignment of the top border.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	/** 上边框的水平对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "信箱模式布局", meta=(DisplayName="上边框水平对齐"))
 	TEnumAsByte<EHorizontalAlignment> TopBorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
-	/** The horizontal alignment of the bottom border.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letterbox Layout")
+	/** 下边框的水平对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "信箱模式布局", meta=(DisplayName="下边框水平对齐"))
 	TEnumAsByte<EHorizontalAlignment> BottomBorderHorizontalAlignment = EHorizontalAlignment::HAlign_Fill;
 
-	/** The top padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
+	/** 上边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="上边框边距"))
 	FMargin TopBorderPadding;
 
-	/** The bottom padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
+	/** 下边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="下边框边距"))
 	FMargin BottomBorderPadding;
 
-	/** Background appearance settings for top border */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
+	/** 上边框的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="上边框背景"))
 	FSlateBrush TopBorderBackground;
 
-	/** Background appearance settings for bottom border */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Letterbox Layout")
+	/** 下边框的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "信箱模式布局", meta=(DisplayName="下边框背景"))
 	FSlateBrush BottomBorderBackground;
 };
 
-/** Sidebar Layout settings*/
+/** 侧边栏布局设置 */
 USTRUCT(BlueprintType)
 struct FSidebarLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is the border that contains loading and tip widgets located at the right or left? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 包含加载和提示控件的边框位于右侧还是左侧？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="控件在右侧"))
 	bool bIsWidgetAtRight = true;
 
-	/** Is loading widget on the top of the tip? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 加载控件是否在提示文本的上方？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="加载控件在上方"))
 	bool bIsLoadingWidgetAtTop = true;
 
-	/** The empty space between loading widget and the tip.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
-	float Space = 1.0f;	
+	/** 加载控件与提示文本之间的间距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="控件间距"))
+	float Space = 1.0f;
 
-	/** The vertical alignment of the vertical box that contains loading/tip widgets. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 包含加载/提示控件的垂直框的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> VerticalAlignment = EVerticalAlignment::VAlign_Center;
 
-	/** The alignment of the loading widget. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sidebar Layout")
+	/** 加载控件的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "侧边栏布局", meta=(DisplayName="加载控件对齐"))
 	FWidgetAlignment LoadingWidgetAlignment;
 
-	/** The alignment of the tips. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sidebar Layout")
+	/** 提示文本的对齐方式 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "侧边栏布局", meta=(DisplayName="提示对齐"))
 	FWidgetAlignment TipAlignment;
 
-	/** The vertical alignment of the border background that contains all widgets. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 包含所有控件的边框背景的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="边框垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> BorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
 
-	/** Offset to left or right of the screen depending on the border that contains loading and tip widgets located at the left or right position.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 根据边框位于左侧或右侧，向屏幕左侧或右侧的偏移量 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="边框水平偏移"))
 	float BorderHorizontalOffset = 0.0f;
 
-	/** The padding area between the border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="边框边距"))
 	FMargin BorderPadding;
 
-	/** Background appearance settings for the border widget */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Sidebar Layout")
+	/** 边框控件的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "侧边栏布局", meta=(DisplayName="边框背景"))
 	FSlateBrush BorderBackground;
 };
 
-/** Dual Sidebar Layout settings*/
+/** 双侧边栏布局设置 */
 USTRUCT(BlueprintType)
 struct FDualSidebarLayoutSettings
 {
 	GENERATED_BODY()
 
-	/** Is loading widget on the right or left border? */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 加载控件位于右边框还是左边框？ */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="加载控件在右侧"))
 	bool bIsLoadingWidgetAtRight = true;
 
-	/** The vertical alignment of the left widget. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 左侧控件的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="左侧垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> LeftVerticalAlignment = EVerticalAlignment::VAlign_Center;
 
-	/** The vertical alignment of the right widget. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 右侧控件的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="右侧垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> RightVerticalAlignment = EVerticalAlignment::VAlign_Center;
 
-	/** The vertical alignment of the left border background that contains all widgets. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 左边框背景的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="左边框垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> LeftBorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
 
-	/** The vertical alignment of the right border background that contains all widgets. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 右边框背景的垂直对齐方式 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="右边框垂直对齐"))
 	TEnumAsByte<EVerticalAlignment> RightBorderVerticalAlignment = EVerticalAlignment::VAlign_Fill;
 
-	/** The padding area between the left border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 左边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="左边框边距"))
 	FMargin LeftBorderPadding;
 
-	/** The padding area between the right border and the widget it contains.*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 右边框与所包含控件之间的内边距 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="右边框边距"))
 	FMargin RightBorderPadding;
 
-	/** Background appearance settings for the left border widget */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 左边框控件的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="左边框背景"))
 	FSlateBrush LeftBorderBackground;
 
-	/** Background appearance settings for the right border widget */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Dual Sidebar Layout")
+	/** 右边框控件的背景外观设置 */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "双侧边栏布局", meta=(DisplayName="右边框背景"))
 	FSlateBrush RightBorderBackground;
 };
 
 /**
- * Async Loading Screen Settings 
+ * 异步加载画面设置
  */
-UCLASS(Config = "Game", defaultconfig, meta = (DisplayName = "Async Loading Screen"))
+UCLASS(Config = "Game", defaultconfig, meta = (DisplayName = "异步加载画面"))
 class ASYNCLOADINGSCREEN_API ULoadingScreenSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
@@ -765,55 +768,55 @@ public:
 	ULoadingScreenSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	/**
-	 * The startup loading screen when you first open the game. Setup any studio logo movies here.
+	 * 首次打开游戏时的启动加载画面。可在此设置工作室Logo视频。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "General")
+	UPROPERTY(Config, EditAnywhere, Category = "常规", meta=(DisplayName="启动加载画面"))
 	FALoadingScreenSettings StartupLoadingScreen;
 
 	/**
-	 * The default loading screen that shows up whenever you open a new level.
+	 * 打开新关卡时的默认加载画面。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "General")
+	UPROPERTY(Config, EditAnywhere, Category = "常规", meta=(DisplayName="默认加载画面"))
 	FALoadingScreenSettings DefaultLoadingScreen;
-	
+
 	/**
-	 * Classic Layout settings.
-	 * The Classic is a simple, generic layout and fits well with many designs.
-	 * A border that contains loading and tip widgets can be at the bottom or top.
+	 * 经典布局设置。
+	 * 经典布局是一种简单通用的布局，适配多种设计风格。
+	 * 包含加载和提示控件的边框可以位于屏幕底部或顶部。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "布局", meta=(DisplayName="经典布局设置"))
 	FClassicLayoutSettings Classic;
-	
+
 	/**
-	 * Center Layout settings.
-	 * The loading widget is at the center of the screen, tip widget can be at the bottom or top.
-	 * The Center layout is a good choice if your loading icon is the main design.
+	 * 居中布局设置。
+	 * 加载控件位于屏幕中央，提示控件可以在底部或顶部。
+	 * 如果加载图标是主要视觉元素，居中布局是不错的选择。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "布局", meta=(DisplayName="居中布局设置"))
 	FCenterLayoutSettings Center;
 
 	/**
-	 * Letterbox Layout settings.
-	 * The Letterbox layout has two borders on top and bottom of the screen. Loading widget
-	 * can be on the top and the tip is at the bottom of the screen, or vice versa.
+	 * 信箱模式布局设置。
+	 * 信箱模式在屏幕上下各有一条边框。加载控件可以在上边，
+	 * 提示文本在下边，反之亦然。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "布局", meta=(DisplayName="信箱模式布局设置"))
 	FLetterboxLayoutSettings Letterbox;
 
 	/**
-	 * Sidebar Layout settings.
-	 * The Sidebar layout has a vertical border on the left or right of the screen. The Sidebar 
-	 * is suitable for storytelling, long paragraphs due to the height of the tip widget.
+	 * 侧边栏布局设置。
+	 * 侧边栏布局在屏幕左侧或右侧有一条垂直边框。
+	 * 由于提示控件较高，侧边栏适合用于故事叙述、长文本展示。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "布局", meta=(DisplayName="侧边栏布局设置"))
 	FSidebarLayoutSettings Sidebar;
 
 	/**
-	 * Dual Sidebar Layout settings
-	 * Similar to Sidebar layout but Dual Sidebar layout has two vertical borders on both left and right of the screen.
-	 * The Dual Sidebar layout is suitable for storytelling, long paragraphs due to the height of the tip widget.
+	 * 双侧边栏布局设置。
+	 * 与侧边栏类似，但双侧边栏在屏幕左右两侧各有一条垂直边框。
+	 * 双侧边栏适合用于故事叙述、长文本展示。
 	 */
-	UPROPERTY(Config, EditAnywhere, Category = "Layout")
+	UPROPERTY(Config, EditAnywhere, Category = "布局", meta=(DisplayName="双侧边栏布局设置"))
 	FDualSidebarLayoutSettings DualSidebar;
 
 };
